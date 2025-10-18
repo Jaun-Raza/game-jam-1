@@ -36,7 +36,7 @@ class Button:
         self.color = color
         self.hover_color = hover_color
         self.current_color = color
-        self.action = action  # Function to call when button is clicked
+        self.action = action 
 
         self.font = pygame.font.Font('fonts/beachday.ttf', 36)
 
@@ -72,24 +72,21 @@ def start_game():
     land_y = WINDOWHEIGHT - land_rect.height
 
     num_bricks = WINDOWWIDTH // land_rect.width
-    trench_indices = random.sample(range(num_bricks), 3)  
+    exclude = [0, 15]
+    choices = [i for i in range(num_bricks) if i not in exclude]
+    trench_indices = random.sample(choices, 3)  
+    blocks_indices = random.sample(range(num_bricks), num_bricks - 1)
             
     for i, x in enumerate(range(0, WINDOWWIDTH, land_rect.width)):
         if i not in trench_indices:
+            print(x)
+            print(land_y)
+            print(trench_indices)
             DISPLAYSURF.blit(landImage, (x, land_y))
-
-    catImage = pygame.image.load("assets/cat.png")
-    catImage = pygame.transform.scale(catImage, (80, 50))
-    catx = 10
-    caty = 600
-    direction = 'right'
-
-    if direction == 'right':
-        catx += 5
-        if catx == 1270:
-            catx -= 5
-    DISPLAYSURF.blit(catImage, (catx, caty))
-
+    
+    for i, x in enumerate(range(0, WINDOWWIDTH, land_rect.width)):
+        if i not in blocks_indices:
+            DISPLAYSURF.blit(landImage, (x, 500))
 
 
 def main():
@@ -104,6 +101,9 @@ def main():
     start_button = Button(440, 450, 380, 70, "Start The Game!", RED, BLACK, start_game)
     start_button.draw(DISPLAYSURF)
 
+    catImage = pygame.image.load("assets/cat.png")
+    catImage = pygame.transform.scale(catImage, (80, 50))
+        
     while True: 
         for event in pygame.event.get():
             if event.type == QUIT:
