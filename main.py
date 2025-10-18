@@ -1,6 +1,5 @@
 import pygame, sys
 from pygame.locals import *
-import time
 import random
 
 FPS = 30
@@ -75,13 +74,10 @@ def start_game():
     exclude = [0, 15]
     choices = [i for i in range(num_bricks) if i not in exclude]
     trench_indices = random.sample(choices, 3)  
-    blocks_indices = random.sample(range(num_bricks), num_bricks - 1)
+    blocks_indices = random.sample(range(num_bricks), num_bricks - 2)
             
     for i, x in enumerate(range(0, WINDOWWIDTH, land_rect.width)):
         if i not in trench_indices:
-            print(x)
-            print(land_y)
-            print(trench_indices)
             DISPLAYSURF.blit(landImage, (x, land_y))
     
     for i, x in enumerate(range(0, WINDOWWIDTH, land_rect.width)):
